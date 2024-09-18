@@ -1,5 +1,5 @@
 import pickle
-from  flask import Flask,request,jsonify,render_template
+from  flask import Flask,request,jsonify,render_template, send_from_directory
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
@@ -12,12 +12,14 @@ ridge_model=pickle.load(open('ridge.pkl','rb'))
 standard_scaler=pickle.load(open('scaler.pkl','rb'))
 @app.route("/")
 def index():
-    return render_template('index.html')
+    # return render_template('index.html')
+    return send_from_directory('.', 'index.html')
 
 
 @app.route("/home")
 def home():
-    return render_template('home.html', results=None)
+#     # return render_template('home.html', results=None)
+     return send_from_directory('.', 'home.html')
 
 @app.route('/predictdata', methods=['GET','POST'])
 def predict_datapoint():
@@ -33,12 +35,14 @@ def predict_datapoint():
         Region=float(request.form.get('Region'))
 
         new_data_scaled=standard_scaler.transform([[Temperature,RH,WS,Rain,FFMC,DMC,ISI,Classes,Region]])
-        result=ridge_model.predict(new_data_scaled)
+        result=ridge_model.predict(new_data_scaled)[0]
 
-        return render_template('home.html',results=result[0])
+        # return render_template('home.html',results=result[0])
+        return jsonify({'result': result})
 
     else:
-        return render_template("home.html")
+        # return render_template("home.html")
+        return send_from_directory('.', 'index.html')
 
 if __name__=="__main__":
     app.run(host="0.0.0.0")
