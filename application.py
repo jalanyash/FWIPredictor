@@ -10,6 +10,7 @@ app=application
 #import ridge regressor and standard scaler
 ridge_model=pickle.load(open('ridge.pkl','rb'))
 standard_scaler=pickle.load(open('scaler.pkl','rb'))
+
 @app.route("/")
 def index():
     # return render_template('index.html')
