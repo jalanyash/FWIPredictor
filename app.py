@@ -4,8 +4,7 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
-application= Flask(__name__)
-app=application
+app= Flask(__name__)
 
 #import ridge regressor and standard scaler
 ridge_model=pickle.load(open('ridge.pkl','rb'))
@@ -45,5 +44,5 @@ def predict_datapoint():
         # return render_template("home.html")
         return send_from_directory('.', 'index.html')
 
-if __name__=="__main__":
-    app.run(host="0.0.0.0")
+# if __name__=="__main__":
+#     app.run(host="0.0.0.0")
