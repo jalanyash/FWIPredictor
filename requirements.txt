@@ -1,2 +1,7 @@
 flask
 Gunicorn
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
